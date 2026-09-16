@@ -100,10 +100,6 @@ body {
   height: 100%;
 }
 
-header {
-  height: 300px;
-}
-
 .title {
   position: relative;
 
@@ -171,20 +167,20 @@ header {
 
   margin-bottom: 50px;
 
-  > div {
+  >div {
     width: 320px;
   }
 
   &-standard {
     align-self: flex-end;
 
-    > .selected-standard {
+    >.selected-standard {
       background-color: $lightblue;
     }
   }
 
   &-various {
-    > .selected-various {
+    >.selected-various {
       background-color: $pink;
     }
   }
@@ -201,6 +197,14 @@ header {
     text-align: center;
     cursor: pointer;
   }
+}
+
+.notification {
+  margin: 50px auto;
+  line-height: 0.5em;
+  font-size: 1.4rem;
+  text-align: center;
+
 }
 
 .select-menu-balloon {
@@ -247,7 +251,7 @@ header {
     display: flex;
     justify-content: center;
 
-    > label {
+    >label {
       @include x-large-font;
 
       display: inline-block;
@@ -257,7 +261,7 @@ header {
       padding: 5px 0 0 5px;
     }
 
-    > input {
+    >input {
       width: 400px;
       height: 70px;
       border: $border;
@@ -307,6 +311,7 @@ header {
 }
 
 .result-slide-open {
+
   &-enter-active,
   &-leave-active {
     transition: opacity 1s ease;
@@ -320,7 +325,7 @@ header {
 
 .result {
   &-box {
-    > div {
+    >div {
       margin: $bottom-fifty;
     }
   }
@@ -389,7 +394,7 @@ header {
   }
 
   &-various {
-    > div:last-child {
+    >div:last-child {
       margin-left: 100px;
     }
   }
@@ -401,7 +406,7 @@ header {
       margin-bottom: 50px;
     }
 
-    > div {
+    >div {
       position: relative;
     }
 
@@ -426,7 +431,7 @@ header {
         @include yellow-button-hover-before;
       }
 
-      > p {
+      >p {
         margin: 20px 50px 0;
       }
     }

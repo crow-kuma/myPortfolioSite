@@ -4,6 +4,7 @@ import ModeSwitch from "./ModeSwitch";
 import Result from "./Result";
 import Share from "./Share";
 import Title from "./Title";
+import Notification from "./Notification";
 
 interface ResultContextType {
   standardResult: number;
@@ -51,6 +52,7 @@ export default function MeloApp() {
     >
       <div>
         <Title />
+        <Notification />
         <ModeSwitch isStandard={isStandard} setIsStandard={setIsStandard} />
         <Form
           weight={weight}
