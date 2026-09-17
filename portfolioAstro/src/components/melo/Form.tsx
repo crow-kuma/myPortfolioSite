@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import type { VariousResultType } from "./MeloApp";
 
 type FormProps = {
@@ -12,9 +13,12 @@ type FormProps = {
   setVariousResult: (variousResult: VariousResultType) => void;
 };
 
+interface FormInputs {
+  weight: string;
+  weightName: string;
+}
+
 export default function Form({
-  weight,
-  weightName,
   setWeight,
   setWeightName,
   isResultOpen,
@@ -22,34 +26,67 @@ export default function Form({
   setStandardResult,
   setVariousResult,
 }: FormProps) {
-  const MELO_WEIGHT: number = 338;
-  const MELO_BB_WEIGHT: number = 20;
-  const CARROT_WEIGHT: number = 0.2;
+  const MELO_WEIGHT = 338;
+  const MELO_BB_WEIGHT = 20;
+  const CARROT_WEIGHT = 0.2;
 
-  const standardResult: number = Math.round((weight / MELO_WEIGHT) * 100) / 100;
-  const variousResult: number = Math.floor(weight / MELO_WEIGHT);
-  const variousResultBB: number = Math.floor(
-    (weight % MELO_WEIGHT) / MELO_BB_WEIGHT,
-  );
-  const variousResultCarrot: number = Math.round(
-    ((weight % MELO_WEIGHT) % MELO_BB_WEIGHT) / CARROT_WEIGHT,
-  );
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<FormInputs>({
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: {
+      weight: "",
+      weightName: "",
+    },
+  });
+
+  const watchedWeight = watch("weight");
+  const watchedWeightName = watch("weightName");
+
+  const displayWeight =
+    watchedWeight && watchedWeight.trim() !== "" ? watchedWeight : "？？？";
+  const displayName =
+    watchedWeightName && watchedWeightName.trim() !== ""
+      ? watchedWeightName
+      : "？？？";
+
+  const errorMessage = errors.weight?.message || errors.weightName?.message;
 
   useEffect(() => {
     if (!isResultOpen) {
+      reset({ weight: "", weightName: "" });
       setWeight(0);
       setWeightName("");
     }
-  }, [isResultOpen, setWeight, setWeightName]);
+  }, [isResultOpen, reset, setWeight, setWeightName]);
 
-  const handleSum = () => {
-    setIsResultOpen(true);
+  const onSubmit: SubmitHandler<FormInputs> = (data) => {
+    const numWeight = parseFloat(data.weight.trim());
+    const cleanWeightName = data.weightName.trim();
+
+    const standardResult = Math.round((numWeight / MELO_WEIGHT) * 100) / 100;
+    const variousResult = Math.floor(numWeight / MELO_WEIGHT);
+    const variousResultBB = Math.floor(
+      (numWeight % MELO_WEIGHT) / MELO_BB_WEIGHT,
+    );
+    const variousResultCarrot = Math.round(
+      ((numWeight % MELO_WEIGHT) % MELO_BB_WEIGHT) / CARROT_WEIGHT,
+    );
+
+    setWeight(numWeight);
+    setWeightName(cleanWeightName);
     setStandardResult(standardResult);
     setVariousResult({
       variousResult,
       variousResultBB,
       variousResultCarrot,
     });
+    setIsResultOpen(true);
   };
 
   useEffect(() => {
@@ -61,22 +98,41 @@ export default function Form({
   }, [isResultOpen]);
 
   return (
-    <section className="main">
+    <form className="main" onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className="main-input">
         <div className="main-input-box">
           <label htmlFor="inputWeight" className="main-inputWeight">
             おもさ
           </label>
           <input
-            type="number"
+            type="text"
+            inputMode="decimal"
             id="inputWeight"
-            name="weight"
             placeholder="重さを書いてね！"
-            onChange={(e) => {
-              const nextWeight: number = e.target.valueAsNumber;
-              setWeight(Number.isNaN(nextWeight) ? 0 : nextWeight);
-            }}
-            value={weight === 0 ? "" : weight}
+            className={errors.weight ? "input-has-error" : ""}
+            {...register("weight", {
+              required: "おもさを教えてほしいな！",
+              validate: (value) => {
+                const trimmed = value.trim();
+                if (!trimmed) {
+                  return "おもさを教えてほしいな！";
+                }
+                if (!/^\d+(\.\d+)?$/.test(trimmed)) {
+                  return "数字で教えてね！（小数はOKだよ）";
+                }
+                if (!/^\d+(\.\d{1,2})?$/.test(trimmed)) {
+                  return "小数は第2位までにしてね！";
+                }
+                const num = parseFloat(trimmed);
+                if (Number.isNaN(num) || num <= 0) {
+                  return "0より大きい数字を入れてね！";
+                }
+                if (num > 999999) {
+                  return "わわっ！そんなに重いものは測れないよ〜！（999,999kgまでにしてね）";
+                }
+                return true;
+              },
+            })}
           />
         </div>
         <div className="main-input-box">
@@ -86,20 +142,32 @@ export default function Form({
           <input
             type="text"
             id="inputWeightName"
-            name="weightName"
             placeholder="名前を書いてね！"
-            onChange={(e) => setWeightName(e.target.value)}
-            value={weightName}
+            className={errors.weightName ? "input-has-error" : ""}
+            {...register("weightName", {
+              maxLength: {
+                value: 20,
+                message:
+                  "お名前がちょっと長すぎるみたい…！（20文字までにしてね）",
+              },
+            })}
           />
         </div>
       </div>
+      {errorMessage && (
+        <div className="melo-balloon-wrapper">
+          <div className="melo-error-balloon" role="alert">
+            <p>{errorMessage}</p>
+          </div>
+        </div>
+      )}
       <div className="main-summary">
-        <p>{weight === 0 ? "？？？" : weight}kgの</p>
-        <p>{weightName === "" ? "？？？" : weightName}は…</p>
+        <p>{displayWeight}kgの</p>
+        <p>{displayName}は…</p>
       </div>
-      <button type="button" className="main-button" onClick={handleSum}>
+      <button type="submit" className="main-button">
         何メロディーレーン？
       </button>
-    </section>
+    </form>
   );
 }
