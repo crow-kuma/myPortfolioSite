@@ -18,15 +18,15 @@
 		"sanity"
 	],
 	"dependencies": {
-		"@sanity/vision": "^6.14.0",
-		"react": "19.2.7",
-		"react-dom": "19.2.7",
-		"sanity": "^6.14.0",
-		"styled-components": "^6.4.3"
+		"@sanity/vision": "^6.15.0",
+		"react": "19.3.0",
+		"react-dom": "19.3.0",
+		"sanity": "^6.15.0",
+		"styled-components": "^6.5.3"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.1",
-		"@types/react": "19.2.17",
+		"@biomejs/biome": "2.5.14",
+		"@types/react": "19.3.0",
 		"typescript": "6.0.3"
 	}
 }
