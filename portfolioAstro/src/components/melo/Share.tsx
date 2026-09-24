@@ -160,9 +160,9 @@ const AgainButton = ({
       if (imageRef.current) {
         imageRef.current.style.transition = "opacity 0.2s";
         imageRef.current.style.opacity = "1";
-        imageRef.current.style.height = "150px";
+        imageRef.current.style.height = "130px";
         imageRef.current.style.bottom = "0px";
-        imageRef.current.style.left = "-20px";
+        imageRef.current.style.left = "-10px";
         imageRef.current.style.transform = "translateY(0)";
       }
     }, 200);
@@ -200,7 +200,7 @@ const AgainButton = ({
       if (imageRef.current) {
         imageRef.current.style.transition = "opacity 0.5s";
         imageRef.current.style.opacity = "";
-        imageRef.current.style.height = "170px";
+        imageRef.current.style.height = "130px";
         imageRef.current.style.bottom = "0px";
         imageRef.current.style.left = "0";
         imageRef.current.style.transform = "";
