@@ -59,13 +59,13 @@ const TwitterShareButton = ({ text, url }: { text: string; url: string }) => {
   const hashtags = ["#それって何メロディーレーン"];
   const handleShareToX = () => {
     const xUrl = new URL("https://x.com/intent/tweet");
-    xUrl.searchParams.append("text", text + "\n\n" + hashtags.join(" ") + "\n");
+    xUrl.searchParams.append("text", `${text}\n\n${hashtags.join(" ")}\n`);
     xUrl.searchParams.append("url", url);
     window.open(xUrl.toString(), "_blank", "noopener,noreferrer");
   };
   return (
     <div className="result-share-twitter">
-      <button onClick={handleShareToX}>
+      <button type="button" onClick={handleShareToX}>
         <img src={imgMeloTwitter.src} alt="メロディーレーンと青い鳥" />
         <p>Xでシェア？</p>
       </button>
@@ -82,7 +82,7 @@ const LineShareButton = ({ text, url }: { text: string; url: string }) => {
   };
   return (
     <div className="result-share-line">
-      <button onClick={handleShareToLine}>
+      <button type="button" onClick={handleShareToLine}>
         <img src={imgMeloLine.src} alt="メロディーレーンとLINE" />
         <p>LINEでシェア？</p>
       </button>
@@ -94,7 +94,7 @@ const CopyButton = ({ text, url }: { text: string; url: string }) => {
   const [hasCopied, setHasCopied] = useState<boolean>(false);
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(text + "\n" + url);
+      await navigator.clipboard.writeText(`${text}\n${url}`);
       setHasCopied(true);
       setTimeout(() => {
         setHasCopied(false);

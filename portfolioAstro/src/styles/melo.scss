@@ -768,10 +768,7 @@ body {
 
           &::after,
           &::before {
-            right: auto;
-            top: auto;
-            bottom: 100%;
-            left: 50%;
+            inset: auto auto 100% 50%;
             transform: translateX(-50%);
           }
 
