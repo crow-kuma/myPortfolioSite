@@ -128,7 +128,7 @@ export default function Form({
                   return "0より大きい数字を入れてね！";
                 }
                 if (num > 999999) {
-                  return "わわっ！そんなに重いものは測れないよ〜！（999,999kgまでにしてね）";
+                  return "わわっ！そんなに重いものは計算できないよ〜！（999,999kgまでにしてね）";
                 }
                 return true;
               },

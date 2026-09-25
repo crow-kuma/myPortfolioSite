@@ -1,10 +1,10 @@
 import { createContext, useContext, useState } from "react";
 import Form from "./Form";
 import ModeSwitch from "./ModeSwitch";
+import Notification from "./Notification";
 import Result from "./Result";
 import Share from "./Share";
 import Title from "./Title";
-import Notification from "./Notification";
 
 interface ResultContextType {
   standardResult: number;

@@ -18,11 +18,11 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
-    "@astrojs/react": "^6.0.6",
+    "@astrojs/react": "^7.0.0",
     "@sanity/astro": "^3.5.1",
     "@sanity/client": "8.6.2",
     "@sanity/vision": "^6.15.0",
-    "astro": "^7.3.3",
+    "astro": "^7.3.5",
     "astro-portabletext": "1.0.1",
     "lightgallery": "^2.9.0",
     "react": "19.3.0",

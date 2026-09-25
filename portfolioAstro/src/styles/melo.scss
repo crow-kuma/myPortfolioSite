@@ -5,6 +5,10 @@ $pink: #ff729f;
 $border: 3px solid #212121;
 $bottom-fifty: 0 auto 50px auto;
 
+// iPad mini縦（744px / 768px）まではPC表示、それ以下（スマホ等）はSP表示
+$breakpoint-sp-container: 650px;
+$breakpoint-sp-screen: 743px;
+
 @mixin flex-column {
   display: flex;
   flex-direction: column;
@@ -89,15 +93,20 @@ body {
 }
 
 #root {
+  width: 100%;
   max-width: 700px;
   margin: 0 auto;
+  padding: 0 clamp(16px, 3.5cqi, 20px);
+  box-sizing: border-box;
+  container-type: inline-size;
+  container-name: melo;
   font-family:
     'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
     Meiryo, sans-serif;
   font-weight: normal;
   color: $black;
   white-space: pre-wrap;
-  height: 100%;
+  min-height: 100%;
 }
 
 .title {
@@ -106,18 +115,28 @@ body {
   h1 {
     display: inline-block;
     position: absolute;
-    top: 50px;
+    top: clamp(20px, 6cqi, 50px);
+    left: 0;
+    width: clamp(220px, 85cqi, 600px);
+    z-index: 1;
+
+    img.title-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
   }
 
   &-illust {
-    width: 700px;
-    height: 220px;
+    width: 100%;
+    max-width: 700px;
+    height: clamp(160px, 31cqi, 220px);
     position: relative;
 
     img {
-      height: 220px;
+      height: clamp(150px, 31cqi, 220px);
       position: absolute;
-      top: 30px;
+      top: clamp(10px, 4cqi, 30px);
       right: 0;
     }
   }
@@ -149,7 +168,7 @@ body {
 
 .fall-in-illust {
   animation: fall-in-illust 1s ease-out 0.1s both;
-  height: 220px;
+  height: clamp(150px, 31cqi, 220px);
 }
 
 @keyframes fall-in-illust {
@@ -165,7 +184,7 @@ body {
 .select-menu {
   @include flex-space-between;
 
-  margin-bottom: 50px;
+  margin-bottom: clamp(30px, 6cqi, 50px);
 
   >div {
     width: 320px;
@@ -191,20 +210,24 @@ body {
     position: relative;
     display: inline-block;
     margin-top: 20px;
-    padding: 40px 0;
+    padding: clamp(28px, 5cqi, 40px) 0;
     width: 320px;
     border: $border;
     text-align: center;
     cursor: pointer;
+    box-sizing: border-box;
   }
 }
 
 .notification {
-  margin: 50px auto;
-  line-height: 0.5em;
-  font-size: 1.4rem;
+  margin: clamp(24px, 6cqi, 50px) auto;
+  font-size: clamp(1.1rem, 2.2cqi, 1.4rem);
   text-align: center;
+  line-height: 1.6;
 
+  p {
+    margin: clamp(2px, 0.8cqi, 6px) 0;
+  }
 }
 
 .select-menu-balloon {
@@ -214,13 +237,14 @@ body {
   align-items: center;
   position: relative;
   background-color: #fff;
-  padding: 0 10px;
+  padding: 10px;
   border: 3px solid $black;
   color: #333;
   width: 320px;
   height: auto;
   text-align: center;
   border-radius: 10px;
+  box-sizing: border-box;
 
   &::after,
   &::before {
@@ -228,7 +252,8 @@ body {
     position: absolute;
     border: 12px solid transparent;
     top: 100%;
-    left: 47%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   &::before {
@@ -244,29 +269,39 @@ body {
 .main-input {
   @include flex-column-center;
 
-  margin-bottom: 50px;
+  margin-bottom: clamp(30px, 6cqi, 50px);
 
   &-box {
-    margin: 15px 0;
+    margin: clamp(10px, 2cqi, 15px) 0;
     display: flex;
     justify-content: center;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
 
     >label {
       @include x-large-font;
 
       display: inline-block;
-      width: 100px;
+      width: clamp(80px, 18cqi, 100px);
       background-color: $yellow;
       border-bottom: $border;
       padding: 5px 0 0 5px;
+      font-size: clamp(1.8rem, 3.8cqi, 2.4rem);
+      box-sizing: border-box;
+      flex-shrink: 0;
     }
 
     >input {
-      width: 400px;
-      height: 70px;
+      width: 100%;
+      max-width: 400px;
+      flex: 1;
+      min-width: 0;
+      height: clamp(52px, 10cqi, 70px);
       border: $border;
-      font-size: 2.4rem;
-      padding-left: 10px;
+      font-size: clamp(1.8rem, 3.8cqi, 2.4rem);
+      padding-left: clamp(8px, 2cqi, 10px);
+      box-sizing: border-box;
 
       &.input-has-error {
         border-color: #e53935;
@@ -279,8 +314,10 @@ body {
 .melo-balloon-wrapper {
   display: flex;
   justify-content: center;
-  margin: -20px auto 35px;
+  margin: clamp(-15px, -2cqi, -20px) auto clamp(20px, 4cqi, 35px);
   width: 100%;
+  box-sizing: border-box;
+  padding: 0 10px;
 }
 
 .melo-error-balloon {
@@ -290,19 +327,20 @@ body {
   align-items: center;
   position: relative;
   background-color: #fff;
-  padding: 14px 24px;
+  padding: clamp(10px, 2cqi, 14px) clamp(16px, 3.5cqi, 24px);
   border: $border;
   color: $black;
   width: auto;
-  max-width: 500px;
+  max-width: min(500px, 100%);
   text-align: center;
   border-radius: 12px;
   box-shadow: 4px 4px 0 rgb(33 33 33 / 15%);
   animation: melo-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-sizing: border-box;
 
   p {
     margin: 0;
-    font-size: 1.8rem;
+    font-size: clamp(1.4rem, 2.8cqi, 1.8rem);
     font-weight: 600;
     line-height: 1.4;
   }
@@ -341,29 +379,35 @@ body {
 
 .main-summary {
   @include flex-column-center;
-  @include x-large-font;
 
-  margin-bottom: 50px;
+  font-size: clamp(1.8rem, 3.8cqi, 2.4rem);
+  font-weight: 600;
+  margin-bottom: clamp(30px, 6cqi, 50px);
+  text-align: center;
 
   p {
     margin: 0;
   }
 
   p:first-child {
-    padding-bottom: 10px;
+    padding-bottom: clamp(6px, 1.5cqi, 10px);
   }
 }
 
 .main-button {
-  @include x-large-font;
-
+  font-size: clamp(1.8rem, 3.8cqi, 2.4rem);
+  font-weight: 600;
   position: relative;
   background-color: $yellow;
   display: block;
-  margin: $bottom-fifty;
-  padding: 15px 100px;
+  margin: clamp(24px, 5cqi, 50px) auto;
+  width: clamp(260px, 75cqi, 420px);
+  max-width: 100%;
+  padding: clamp(14px, 2.5cqi, 18px) 0;
   border: none;
   cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
 
   &::before {
     @include yellow-button-before;
@@ -408,8 +452,9 @@ body {
     @include flex-center;
 
     height: 250px;
-    margin-bottom: 50px;
+    margin-bottom: clamp(30px, 6cqi, 50px);
     gap: 24px;
+    box-sizing: border-box;
 
     div {
       img {
@@ -430,6 +475,7 @@ body {
         margin: 50px 0;
         text-align: center;
         border: $border;
+        box-sizing: border-box;
 
         &::after,
         &::before {
@@ -471,7 +517,7 @@ body {
     &-sns {
       @include flex-space-between;
 
-      margin-bottom: 50px;
+      margin-bottom: clamp(30px, 6cqi, 50px);
     }
 
     >div {
@@ -486,6 +532,7 @@ body {
       width: 300px;
       border: none;
       position: relative;
+      box-sizing: border-box;
 
       &::before {
         @include yellow-button-before;
@@ -506,7 +553,11 @@ body {
 
     img {
       height: 120px;
+      max-height: none;
+      max-block-size: none;
+      max-inline-size: none;
       position: absolute;
+      bottom: 0;
     }
 
     &-twitter {
@@ -547,7 +598,7 @@ body {
 .again {
   width: fit-content;
   height: 85px;
-  margin: 100px auto 50px;
+  margin: clamp(60px, 12cqi, 100px) auto clamp(30px, 6cqi, 50px);
 
   &-button {
     @include large-font;
@@ -557,6 +608,7 @@ body {
     border: none;
     width: 320px;
     cursor: pointer;
+    box-sizing: border-box;
 
     &::before {
       @include yellow-button-before;
@@ -571,14 +623,256 @@ body {
     }
 
     p {
-      margin: 20px 50px 0 120px;
+      margin: 20px 40px 0 100px;
     }
 
     img {
       position: absolute;
-      height: 170px;
+      height: 130px;
+      max-height: none;
+      max-block-size: none;
+      max-inline-size: none;
       bottom: 0;
       left: 0;
+    }
+  }
+}
+
+// ==========================================
+// SP表示（iPad mini 縦向き未満の画面幅）
+// Container Queryによるレスポンシブ切り替え
+// ==========================================
+@container melo (max-width: #{$breakpoint-sp-container}) {
+  .title {
+    h1 {
+      top: clamp(12px, 4cqi, 30px);
+
+      img.title-image {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+
+    &-illust {
+      height: clamp(130px, 30cqi, 180px);
+
+      img {
+        height: clamp(130px, 30cqi, 180px);
+        top: clamp(5px, 2cqi, 15px);
+      }
+    }
+  }
+
+  .fall-in-illust {
+    height: clamp(130px, 30cqi, 180px);
+  }
+
+  .select-menu {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    gap: clamp(10px, 2.5cqi, 20px);
+    margin-bottom: clamp(24px, 5cqi, 40px);
+
+    >div {
+      flex: 0 1 240px;
+      width: 100%;
+      max-width: 240px;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    &-standard {
+      align-self: flex-end;
+    }
+
+    &-various {
+      align-self: flex-end;
+    }
+
+    &-balloon {
+      width: 100%;
+      max-width: 240px;
+      min-height: clamp(60px, 14cqi, 72px);
+      padding: 6px clamp(4px, 1.5cqi, 8px);
+      font-size: clamp(1.05rem, 2.4cqi, 1.3rem);
+      line-height: 1.35;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        margin: 0;
+      }
+
+      &::before {
+        border-top-width: 14px;
+      }
+
+      &::after {
+        border-top-width: 14px;
+        margin-top: -3px;
+      }
+    }
+
+    &-button {
+      width: 100%;
+      max-width: 240px;
+      height: 50px;
+      margin-top: clamp(8px, 1.8cqi, 12px);
+      padding: 0 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(1.4rem, 3cqi, 1.7rem);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+  }
+
+  .result {
+    &-box {
+      >div {
+        margin: clamp(24px, 5cqi, 50px) auto;
+      }
+    }
+
+    &-common {
+      flex-direction: column;
+      align-items: center;
+      height: auto;
+      gap: 0;
+      margin-bottom: clamp(30px, 6cqi, 50px);
+
+      div {
+        img {
+          height: clamp(160px, 35cqi, 220px);
+          width: auto;
+        }
+      }
+
+      div:last-child {
+        width: 100%;
+        max-width: 360px;
+
+        p {
+          display: block;
+          margin: 12px auto 0;
+          padding: clamp(14px, 3cqi, 20px);
+          font-size: clamp(1.6rem, 3.5cqi, 2rem);
+          line-height: 1.5;
+
+          &::after,
+          &::before {
+            inset: auto auto 100% 50%;
+            transform: translateX(-50%);
+          }
+
+          &::before {
+            border: solid transparent;
+            border-bottom-color: $black;
+            border-width: 13px;
+            margin-right: 0;
+            margin-top: 0;
+          }
+
+          &::after {
+            border: solid transparent;
+            border-bottom-color: #fff;
+            border-width: 10px;
+            margin-top: 0;
+            margin-bottom: -3px;
+          }
+        }
+      }
+    }
+
+    &-various {
+      >div:last-child {
+        margin-left: 0;
+      }
+    }
+
+    &-share {
+      &-sns {
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(16px, 3.5cqi, 24px);
+        margin-bottom: clamp(16px, 3.5cqi, 24px);
+      }
+
+      button {
+        width: 200px;
+        max-width: 100%;
+        font-size: clamp(1.4rem, 3cqi, 1.6rem);
+
+        >p {
+          margin: 18px 12px 0;
+        }
+      }
+
+      img {
+        height: 72px;
+        max-height: none;
+        max-block-size: none;
+        max-inline-size: none;
+        bottom: 0;
+      }
+
+      &-twitter,
+      &-line {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        p {
+          text-align: right;
+          margin-right: 12px;
+          margin-left: 0;
+        }
+      }
+
+      &-copy {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        p {
+          text-align: left;
+          margin-left: 12px;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .again {
+    margin: clamp(24px, 5cqi, 40px) auto clamp(30px, 6cqi, 50px);
+    height: auto;
+
+    &-button {
+      width: 200px;
+      max-width: 100%;
+      font-size: clamp(1.4rem, 3cqi, 1.6rem);
+
+      p {
+        margin: 18px 14px 0 0;
+        text-align: right;
+      }
+
+      img {
+        height: 80px !important;
+        max-height: none;
+        max-block-size: none;
+        max-inline-size: none;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
     }
   }
 }
