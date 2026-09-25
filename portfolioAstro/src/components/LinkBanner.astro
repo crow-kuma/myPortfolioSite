@@ -5,12 +5,22 @@ interface Props {
   alt: string;
   label: string;
   isMonochrome?: boolean;
+  target?: string;
+  rel?: string;
 }
 
-const { href, src, alt, label, isMonochrome = false } = Astro.props;
+const {
+  href,
+  src,
+  alt,
+  label,
+  isMonochrome = false,
+  target = href.startsWith("/") ? undefined : "_blank",
+  rel = target === "_blank" ? "noopener noreferrer" : undefined,
+} = Astro.props;
 ---
 
-<a href={href} target="_blank" rel="noopener noreferrer" class="banner-link">
+<a href={href} target={target} rel={rel} class="banner-link">
   <img src={src} alt={alt} class={isMonochrome ? "mono-icon" : ""} />
   <span>{label}</span>
 </a>

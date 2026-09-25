@@ -1,9 +1,8 @@
 ---
+import LinkBanner from "../../components/LinkBanner.astro";
+import LinksSection from "../../components/LinksSection.astro";
 import PageTitle from "../../components/PageTitle.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-
-// import LinksSection from "../../components/LinksSection.astro";
-// import LinkBanner from "../../components/LinkBanner.astro";
 
 const pageTitle = "お楽しみアプリ・配布物";
 ---
@@ -12,9 +11,7 @@ const pageTitle = "お楽しみアプリ・配布物";
   <div class="glb-page-container">
     <PageTitle pageTitle={pageTitle} className="glb-u-bg-light-green" />
     <div class="playground-layout glb-u-mb-36">
-      <p>準備中！</p>
-      <!-- TODO: 準備ができたらコメントアウトを外す -->
-      <!-- <LinksSection
+      <LinksSection
         title="Apps"
         tabClass="glb-u-bg-light-green"
         gridClass="glb-u-bg-pale-light-green"
@@ -22,11 +19,11 @@ const pageTitle = "お楽しみアプリ・配布物";
       >
         <LinkBanner
           href="/playground/melo"
-          src=""
+          src="/melo/apple-touch-icon.png"
           alt="それって何メロディーレーン？"
           label="それって何メロディーレーン？"
         />
-      </LinksSection> -->
+      </LinksSection>
     </div>
   </div>
 </BaseLayout>

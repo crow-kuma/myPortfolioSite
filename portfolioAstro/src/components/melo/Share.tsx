@@ -34,7 +34,7 @@ export default function Share({
   if (isStandard) {
     result = `${standardResult}メロディーレーンです！`;
   } else {
-    if (!variousResult) return;
+    if (!variousResult) return null;
     result = `${variousResult.variousResult}メロディーレーン\n${variousResult.variousResultBB}うまれたてのメロディーレーン\nそしてにんじん${variousResult.variousResultCarrot}本です！`;
   }
   const text = `【それって何メロディーレーン？】\n${weightData}\n${result}`;
