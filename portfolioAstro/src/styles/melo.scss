@@ -638,6 +638,23 @@ body {
   }
 }
 
+.melo-footer {
+  text-align: center;
+  margin: clamp(40px, 8cqi, 70px) auto 30px;
+  padding-bottom: 20px;
+
+  a {
+    color: $black;
+    font-size: clamp(1.6rem, 2.6cqi, 2rem);
+    text-decoration: underline;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+
 // ==========================================
 // SP表示（iPad mini 縦向き未満の画面幅）
 // Container Queryによるレスポンシブ切り替え

@@ -83,6 +83,11 @@ export default function MeloApp() {
             />
           </>
         )}
+        <footer className="melo-footer">
+          <a href="/" className="melo-back-link" target="_self">
+            ← Back to creator's page
+          </a>
+        </footer>
       </div>
     </ResultContext.Provider>
   );
